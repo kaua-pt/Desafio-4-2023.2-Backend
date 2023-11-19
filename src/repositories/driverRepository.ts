@@ -10,21 +10,21 @@ const createDriver = async (cpf:string,nome:string,cnh:Date,cat:string) =>
 
 const readDrivers = async ()=>{
     const drivers = await mysqlConn.execute("SELECT * FROM Motoristas;");
-    return driverSchema.array().parse(drivers) ;
+    return driverSchema.array().parse(drivers);
 }
 
 const readVehicles = async (cpf:string)=>{
     const vehicles = await mysqlConn.execute(`SELECT m.*, v.*
                                             FROM Motoristas m
-                                            JOIN Veiculos v ON m.CPF = v.CPF_motorista;`);
+                                            JOIN Veiculos v ON m.CPF = ?;`,[cpf]);
     return vehicleSchema.array().parse(vehicles);
 }
 
 const readFines = async (cpf:string)=>{
     const fines = await mysqlConn.execute(`SELECT m.*, v.Placa
                                         FROM Motoristas m
-                                        JOIN Veiculos v ON m.CPF = v.CPF_motorista
-                                        JOIN Multas m ON v.Placa = m.Placa_veiculo;`);
+                                        JOIN Veiculos v ON m.CPF = ?
+                                        JOIN Multas m ON v.Placa = m.Placa_veiculo;`,[cpf]);
     return finesSchema.array().parse(fines);
 }
 
