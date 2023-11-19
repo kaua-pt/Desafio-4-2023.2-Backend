@@ -6,6 +6,7 @@ export const finesSchema = z.object({
     dataDaMulta: z.date(),
     pontos: z.number().int().positive(),
     tipoDeInfracao: z.string().max(50).nonempty(),
+    placaVeiculo: z.string().max(50).nonempty(),
 });
 
 export type Fines = z.infer<typeof finesSchema>;

@@ -1,40 +1,36 @@
-/* Lógico_1: */
 CREATE DATABASE IF NOT EXISTS base;
 
 USE base;
 
-CREATE TABLE MOTORISTA (
-    cpf VARCHAR(14) PRIMARY KEY NOT NULL,
-    nome VARCHAR(50) NOT NULL ,
-    vencimentoDaCnh DATE NOT NULL,
-    categoriaDaCnh VARCHAR(2) NOT NULL,
-    pontos INT(3) NOT NULL,
-    FK_VEICULO_placa VARCHAR(8)
+-- Tabela de Motoristas
+CREATE TABLE Motoristas (
+    CPF VARCHAR(14) PRIMARY KEY,
+    Nome VARCHAR(100) NOT NULL,
+    VencimentoCNH DATE NOT NULL,
+    CategoriaCNH VARCHAR(2) CHECK (CategoriaCNH IN ('A', 'B', 'AB'))
 );
 
-CREATE TABLE VEICULO (
-    placa VARCHAR(8) PRIMARY KEY NOT NULL, 
-    marca VARCHAR(15) NOT NULL,
-    modelo VARCHAR(15) NOT NULL,
-    ano INT(4) NOT NULL,
-    cor VARCHAR(10) NOT NULL,
-    FK_MULTA_id INT(3)
+-- Tabela de Veículos
+CREATE TABLE Veiculos (
+    Placa VARCHAR(8) PRIMARY KEY,
+    Marca VARCHAR(50) NOT NULL,
+    Modelo VARCHAR(50) NOT NULL,
+    Ano INT NOT NULL,
+    Cor VARCHAR(20) NOT NULL,
+    CPF_motorista VARCHAR(14) REFERENCES Motoristas(CPF)
 );
 
-CREATE TABLE MULTA (
-    id INT(3) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    valor INT(10) NOT NULL,
-    dataDaMulta DATE NOT NULL,
-    pontos INT(2) NOT NULL,
-    tipoDeInfracao VARCHAR(50) NOT NULL
+-- Tabela de Multas
+CREATE TABLE Multas (
+    ID_multa SERIAL PRIMARY KEY,
+    Valor DECIMAL(10, 2) NOT NULL,
+    DataDeVencimento DATE NOT NULL,
+    PontosPenalidade INT NOT NULL,
+    TipoInfracao VARCHAR(50) NOT NULL CHECK (TipoInfracao IN('Velocidade Acima da média permitida',
+                                                            'Estacionar em local proibido',
+                                                            'Dirigir utilizando o celular',
+                                                            'Dirigir sob efeito de álcool',
+                                                            'Não utilizar cinto de segurança',
+                                                            'Avançar o sinal vermelho')),
+    Placa_veiculo VARCHAR(8) REFERENCES Veiculos(Placa)
 );
- 
-ALTER TABLE MOTORISTA ADD CONSTRAINT FK_MOTORISTA_2
-    FOREIGN KEY (FK_VEICULO_placa)
-    REFERENCES VEICULO (placa)
-    ON DELETE RESTRICT;
- 
-ALTER TABLE VEICULO ADD CONSTRAINT FK_VEICULO_2
-    FOREIGN KEY (FK_MULTA_id)
-    REFERENCES MULTA (id)
-    ON DELETE RESTRICT;

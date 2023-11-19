@@ -1,15 +1,8 @@
-import { mysqlConn } from "../base/mysql"
-import { vehicleSchema } from "../schemas/vehicle.schema";
+import { mysqlConn } from "../base/mysql";
 
-const createVehicle = async (placa:string,marca:string,cor:string,ano:number,modelo:string) =>
-    await mysqlConn.execute("INSERT INTO VEICULO (placa, marca, modelo, ano, cor) VALUES (?, ?, ?, ?, ?)",
-    [placa, marca, modelo, ano, cor]) 
-
-
-const readVehicles = async ()=>{
-    const drivers = await mysqlConn.execute("SELECT * FROM VEICULO");
-    return vehicleSchema.array().parse(drivers) ;
-}
+const createVehicle = async (placa:string,marca:string,cor:string,ano:number,modelo:string,cpf:string) =>
+    await mysqlConn.execute("INSERT INTO Veiculos (Placa, Marca, Modelo, Ano, Cor,CPF_motorista) VALUES (?, ?, ?, ?, ?, ?)",
+    [placa, marca, modelo, ano, cor,cpf]) 
 
 
-export default {createVehicle,readVehicles}
+export default {createVehicle}

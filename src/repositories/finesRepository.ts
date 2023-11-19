@@ -1,15 +1,7 @@
 import { mysqlConn } from "../base/mysql"
-import { finesSchema } from "../schemas/fines.schema";
 
-const createFines = async (valor:number,dataDaMulta:Date,pontos:number,tipoDeInfracao:string) =>
-    await mysqlConn.execute("INSERT INTO MULTA (valor, dataDaMulta, pontos, tipoDeInfracao) VALUES (?, ?, ?, ?)",
-    [valor, dataDaMulta, pontos, tipoDeInfracao]) 
+const createFines = async (valor:number,dataDaMulta:Date,pontos:number,tipoDeInfracao:string,placa:string) =>
+    await mysqlConn.execute("INSERT INTO Multas (Valor, DataDeVencimento, PontosPenalidade, TipoInfracao,Placa_veiculo) VALUES (?, ?, ?, ?, ?)",
+    [valor, dataDaMulta, pontos, tipoDeInfracao,placa]) 
 
-
-const readFines = async ()=>{
-    const fines = await mysqlConn.execute("SELECT * FROM MULTA");
-    return finesSchema.array().parse(fines) ;
-}
-
-
-export default {createFines,readFines}
+export default {createFines}
