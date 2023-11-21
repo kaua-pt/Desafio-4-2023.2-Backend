@@ -1,13 +1,12 @@
 import { Router } from "express";
-import {driverSchema } from "../schemas/driver.schema";
 import driverRepository from "../repositories/driverRepository";
-
 
 const router = Router();
 
 router.post("/create", async (req, res) => {
-    const {CPF,Nome,VencimentoCNH,CategoriaCNH} = driverSchema.parse(req.body);
-    await driverRepository.createDriver(CPF,Nome,VencimentoCNH,CategoriaCNH);
+    const {CPF,Nome,VencimentoCNH,CategoriaCNH} = req.body;
+    const date = new Date(VencimentoCNH);
+    await driverRepository.createDriver(CPF,Nome,date,CategoriaCNH);
     return res.status(200);
 });
 
