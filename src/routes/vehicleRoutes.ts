@@ -5,8 +5,8 @@ import vehicleRepository from "../repositories/vehicleRepository";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-    const {placa,marca,modelo,ano,cor,CPFmotorista} = vehicleSchema.parse(req.body);
-    await vehicleRepository.createVehicle(placa,marca,cor,ano,modelo,CPFmotorista);
+    const {Placa,Marca,Modelo,Ano,Cor,CPFmotorista} = vehicleSchema.parse(req.body);
+    await vehicleRepository.createVehicle(Placa,Marca,Cor,Ano,Modelo,CPFmotorista);
     return res.status(200);
 });
 

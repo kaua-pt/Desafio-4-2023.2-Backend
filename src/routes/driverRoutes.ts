@@ -6,13 +6,14 @@ import driverRepository from "../repositories/driverRepository";
 const router = Router();
 
 router.post("/create", async (req, res) => {
-    const {cpf,nome,vencimentoDaCnh,categoriaDaCnh} = driverSchema.parse(req.body);
-    await driverRepository.createDriver(cpf,nome,vencimentoDaCnh,categoriaDaCnh);
+    const {CPF,Nome,VencimentoCNH,CategoriaCNH} = driverSchema.parse(req.body);
+    await driverRepository.createDriver(CPF,Nome,VencimentoCNH,CategoriaCNH);
     return res.status(200);
 });
 
 router.get("/readAll", async (req, res) => {
     const drivers = await driverRepository.readDrivers();
+    console.log("chegando");
     if(drivers.length < 1)
         return res.status(404);
     return res.json(drivers).status(200);

@@ -9,11 +9,13 @@ const createDriver = async (cpf:string,nome:string,cnh:Date,cat:string) =>
 
 
 const readDrivers = async ()=>{
-    const drivers = await mysqlConn.execute("SELECT * FROM Motoristas;");
+    const drivers = await mysqlConn.execute("select * from Motoristas;");
+    console.log("chegando");
     return driverSchema.array().parse(drivers);
 }
 
 const readVehicles = async (cpf:string)=>{
+    console.log(cpf);
     const vehicles = await mysqlConn.execute(`SELECT m.*, v.*
                                             FROM Motoristas m
                                             JOIN Veiculos v ON m.CPF = ?;`,[cpf]);
