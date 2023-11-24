@@ -10,7 +10,6 @@ const createDriver = async (cpf:string,nome:string,cnh:Date,cat:string) =>
 
 const readDrivers = async ()=>{
     const drivers = await mysqlConn.execute("select * from Motoristas;");
-    console.log("chegando");
     return driverSchema.array().parse(drivers);
 }
 

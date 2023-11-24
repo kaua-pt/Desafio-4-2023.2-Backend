@@ -7,7 +7,7 @@ const router = Router();
 router.post("/create", async (req, res) => {
     const {Placa,Marca,Modelo,Ano,Cor,CPFmotorista} = vehicleSchema.parse(req.body);
     await vehicleRepository.createVehicle(Placa,Marca,Cor,Ano,Modelo,CPFmotorista);
-    return res.status(200);
+    return res.status(201);
 });
 
 export default router;

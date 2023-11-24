@@ -7,12 +7,11 @@ router.post("/create", async (req, res) => {
     const {CPF,Nome,VencimentoCNH,CategoriaCNH} = req.body;
     const date = new Date(VencimentoCNH);
     await driverRepository.createDriver(CPF,Nome,date,CategoriaCNH);
-    return res.status(200);
+    return res.status(201);
 });
 
 router.get("/readAll", async (req, res) => {
     const drivers = await driverRepository.readDrivers();
-    console.log("chegando");
     if(drivers.length < 1)
         return res.status(404);
     return res.json(drivers).status(200);
